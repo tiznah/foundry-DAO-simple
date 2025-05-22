@@ -6,20 +6,20 @@ import {MyGovernor} from "../src/MyGovernor.sol";
 import {TimeLock} from "../src/TimeLock.sol";
 import {GovToken} from "../src/GovToken.sol";
 import {Box} from "../src/Box.sol";
-contract MyGovernorTest is Test {
 
+contract MyGovernorTest is Test {
     MyGovernor public governor;
     GovToken public token;
     TimeLock public timelock;
     Box public box;
     address public user = makeAddr("user"); // user of the protocol
-    address [] public proposers;
-    address [] public executors;
+    address[] public proposers;
+    address[] public executors;
     uint256 public constant INITIAL_SUPPLY = 100 ether;
     uint256 public constant MIN_DELAY = 1 hours;
-    uint256 [] public values;
-    bytes [] public calldatas;
-    address [] public targets;
+    uint256[] public values;
+    bytes[] public calldatas;
+    address[] public targets;
 
     function setUp() public {
         token = new GovToken();
@@ -36,14 +36,15 @@ contract MyGovernorTest is Test {
         timelock.revokeRole(adminRole, user);
         box = new Box();
         box.transferOwnership(address(timelock));
-        vm.stopPrank(); 
+        vm.stopPrank();
     }
+
     function testCantUpdateBoxWithoutGovernance() public {
         vm.expectRevert();
         box.store(1);
     }
 
-    function TestGovernanceUpdatedBox () public {
+    function TestGovernanceUpdatedBox() public {
         uint256 valueToStore = 888;
         // first propose the change
         string memory description = "Propose to update the box value";
